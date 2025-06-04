@@ -1,4 +1,10 @@
 
+
+Make sure you install the '.NET Desktop Development' and 'ASP.NET and web development' workloads.
+
+https://dotnet.microsoft.com/en-us/download
+
+https:confused:/www.visualstudio.com/vs/community/
 # marsDotnetCucumber Framework
 
 A .NET-based test automation framework using Reqnroll (Cucumber for .NET) and Selenium WebDriver. This framework
