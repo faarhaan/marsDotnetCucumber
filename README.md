@@ -1,14 +1,7 @@
-
-
-Make sure you install the '.NET Desktop Development' and 'ASP.NET and web development' workloads.
-
-https://dotnet.microsoft.com/en-us/download
-
-https:confused:/www.visualstudio.com/vs/community/
 # marsDotnetCucumber Framework
 
 A .NET-based test automation framework using Reqnroll (Cucumber for .NET) and Selenium WebDriver. This framework
-is designed to test web applications with a clean, maintainable structure.
+is designed to test web applications "Mars Trading Skill Portal" with a clean, maintainable structure.
 
 ## Overview
 
@@ -17,15 +10,17 @@ This framework provides automated functional testing for web applications with t
 - **Reqnroll**: Implements Cucumber's Gherkin syntax for readable tests
 - **Selenium WebDriver**: Handles browser interactions
 - **NUnit**: Manages test execution and assertions
-- **ExtentReports**: Generates HTML test reports
 - **Page Object Model (POM)**: Separates test logic from page interactions
 
 ## Prerequisites
 
-- **.NET SDK**: Version 8.0 or higher (install from [dotnet.microsoft.com](https://dotnet.microsoft.com))
+- **.NET SDK**: Version 8.0 or higher (install from [https://dotnet.microsoft.com/en-is/download]
 - **IDE**: Visual Studio Code or Visual Studio (recommended)
+             Make sure you install the '.NET Desktop Development' and 'ASP.NET and web development' workloads.
+             https://www.visualstudio.com/vs/community/
 - **Chrome Browser**: Required for Selenium WebDriver (ChromeDriver version must match your browser version via
   WebDriverManager)
+
 
 ## Project Structure
 
@@ -35,6 +30,5 @@ This framework provides automated functional testing for web applications with t
 ├── Pages/              # Page Object Model classes
 ├── Hooks/              # Setup and teardown logic
 ├── Config/             # Configuration classes
-├── Tests/              # NUnit test runner
 └── settings.json       # Configuration file
 ```
