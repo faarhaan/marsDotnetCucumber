@@ -46,8 +46,8 @@ Note: you have to come to folder where solution file is placed to restore depend
   dotnet restore
 
 # Additional Check
-  If you found dependencies are not working for you so you have 
-  Project tab > Manage Nugets Pacakages > install tab
+  If you found dependencies are not working for you so you have to do following, In visual Studio,
+  Goto Project tab > Manage Nugets Pacakages > install tab
   Make sure dependencies are available here
   Note:  if you are using visual studio first time or fresh installation, you have to install one more plugin 
   Extension > Manage extensions > Browse tab > search for ReqnRoll for visual studio
