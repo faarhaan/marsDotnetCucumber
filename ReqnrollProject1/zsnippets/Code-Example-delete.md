@@ -1,3 +1,46 @@
+// 
+/*if (MarsLogo.Text == "Mars Logo")
+            {
+                Assert.Pass("User Login Successfully! Test is Passed");
+            }
+            else
+            {
+                Assert.Fail("User didn't Login! Test Failed");
+            }
+*/
+
+ public class HomePage
+    {
+        // verify user is login successfully
+        public string UserIsInHomePage(IWebDriver driver)
+        {
+            Thread.Sleep(3000);
+            IWebElement MarsLogo = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/div[1]/a"));
+            assert.that(MarsLogo.Text == "Mars Logo", "User is not logged in successfully! Test Failed");
+           
+        }
+    }
+Normall hooks for opening and closing the browser with out clening
+  /*    [Binding]
+        public class Hooks : CommonDriver
+        {
+            [BeforeScenario(Order = 0)]
+            public void SetupSteps()
+            {
+                //  open chrome Browser
+                driver = new ChromeDriver();
+
+            }
+
+            [AfterScenario(Order = 100)]
+            public void CloseTestRun()
+            {
+                // Close the browser after test execution
+                {
+                    driver.Quit();
+                }
+            }
+        }*/
 Scenario: Add multiple languages using a table
     Given I login to skillShare portal successfully
     When I add the following languages:
@@ -73,3 +116,62 @@ public void ThenAllTheseLanguagesShouldBePresentInTheList(Reqnroll.Table table)
             {
                 Console.WriteLine("Skills are not added in database! Test is Failed");
             }
+
+
+            ************************************************************
+            ************************************************************
+   @order:2   @Languages @happypath
+
+    @order:4 @negative @invalid 
+ Scenario: Delete all languages
+    Given I login to skillShare portal successfully
+    When I delete all languages
+    Then no languages should be present in the list
+
+    @order:5 @negativeTesting 
+
+    @order:6 @negativeTesting 
+ Scenario: Delete all duplicate languages
+    Given I login to skillShare portal successfully
+    When I delete all languages
+    Then no languages should be present in the list
+    @order:7 @DestructiveTesting 
+
+    @order:8 @negative  @validinputs
+
+    @order:9 @negativeTesting 
+ Scenario: Delete destructive languages
+    Given I login to skillShare portal successfully
+    When I delete all languages
+    Then no languages should be present in the list
+
+    @order:10   @skills @happypath
+    @order:11 @negativeTesting @delete
+Scenario: Delete all Skills one by one
+    Given I login to skillShare portal successfully
+    When I delete all skills one by one
+    Then no skills should be present in the list
+
+
+
+    [When(@"I create the skill '(.*)' and level '(.*)' list successfully")]
+public void WhenICreateTheSkillAndLevelListSuccessfully(string skill, string level)
+{
+    SkilPage skilPageObj = new SkilPage();
+    skilPageObj.SkillPage(driver, skill, level);
+}
+
+[When(@"I update the skill '(.*)' to '(.*)' and level to '(.*)'")]
+public void WhenIUpdateTheSkillToAndLevelTo(string oldSkill, string newSkill, string newLevel)
+{
+    SkilPage skilPageObj = new SkilPage();
+    skilPageObj.UpdateSkill(driver, oldSkill, newSkill, newLevel);
+}
+
+[Then(@"skills '(.*)' and level '(.*)' list should be created successfully")]
+public void ThenSkillsAndLevelListShouldBeCreatedSuccessfully(string skill, string level)
+{
+    SkilPage skilPageObj = new SkilPage();
+    string getLastSkill = skilPageObj.GetLastSkill(driver, skill, level);
+    Assert.That(getLastSkill == skill, $"Skill '{skill}' was not added or updated! Test is Failed!");
+}

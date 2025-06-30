@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using mars.Utilities;
 using OpenQA.Selenium;
 using ReqnrollProject1.Utilities;
 
 namespace mars.Pages
 {
-    public class LoginPage
+    public class LoginPage : CommonDriver
     {
         // Below method performs the login actions to open the portal mar
-        public void LoginActions(IWebDriver driver)
+        public void LoginActions()
         {
             driver.Navigate().GoToUrl(" http://localhost:5003");
             Thread.Sleep(3000);
