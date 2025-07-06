@@ -7,34 +7,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ReqnrollProject1.Pages
 {
     public class SkilPage : CommonDriver
     {
+        // Locators as private fields
+        private readonly By skillTab = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[2]");
+        private readonly By addNewButton = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/thead/tr/th[3]/div");
+        private readonly By enterFirstSkill = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[1]/input");
+        private readonly By levelDropdown = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[2]/select");
+        private readonly By addButton = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/span/input[1]");
+        private readonly By lastSkill = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td[1]");
+        private readonly By deleteIcons = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr/td[3]/span[2]/i");
+        private readonly By totalRows = By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr");
+        private readonly By pad = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[1]");
+        
+        // POM methods
         public void SkillPage( String Skills, String Level)
         {
             // Go to Skill tab
-            IWebElement skillTab = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[2]"));
-            skillTab.Click();
+            driver.FindElement(skillTab).Click();
 
             // Click on Add New Button
-            IWebElement clickOnAddNewButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/thead/tr/th[3]/div"));
-            clickOnAddNewButton.Click();
+            driver.FindElement(addNewButton).Click();
+
             // Click on the skill pad to enter the skill
-            IWebElement pad = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[1]"));
+            driver.FindElement(pad);
+
             //Enter 1st skill 
-            IWebElement enterFirstSkill = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[1]/input"));
-            enterFirstSkill.Clear();
-            enterFirstSkill.SendKeys(Skills);
+            driver.FindElement(enterFirstSkill).Clear();
+            driver.FindElement(enterFirstSkill).SendKeys(Skills);
+
             // click on dropdown and select level "Intermediate"
-            IWebElement dropDownLevel1 = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[2]/select"));
+            //  new SelectElement(driver.FindElement(levelDropdown).SelectByText(Level);  OR
+            IWebElement dropDownLevel1 = driver.FindElement(levelDropdown);
             var selectElement1 = new SelectElement(dropDownLevel1);
             selectElement1.SelectByText(Level);
 
             //  Click on Add button to add the skill in the list             
-            IWebElement clickOnAddButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/span/input[1]"));
-            clickOnAddButton.Click();
+            driver.FindElement(addButton).Click();
             Thread.Sleep(2000);
         }
 
@@ -43,25 +56,26 @@ namespace ReqnrollProject1.Pages
         {
             Thread.Sleep(2000);
             // Verify languages are successfully added
-            IWebElement lastSkill = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td[1]"));
+            return driver.FindElement(lastSkill).Text; 
+            
+            // or driver.FindElement(lastSkill)); return lastSkill.Text
             //Assert.That(lastSkill.Text == "Selenium", "Skills are not added in database! Test is Failed");
-            return lastSkill.Text;
+
         }
+
+
         public void DeleteAllSkills()
         {
-          /*  // Activate Skill tab so that skills can be deleted
-            IWebElement sKillTab = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[2]"));
-            sKillTab.Click();
-            Thread.Sleep(1000);
-*/
+            /*  // Activate Skill tab so that skills can be deleted
+                  driver.FindElement(sKillTab).Click(); */
+
             // Loop through skill rows, click delete for each
             while (true)
             {
-                var deleteIcon = driver.FindElements(By.XPath(
-                    "//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr/td[3]/span[2]/i"));
-                if (deleteIcon.Count == 0)
+                var deleteIconList2 = driver.FindElements(deleteIcons);
+                if (deleteIconList2.Count == 0)
                     break;
-                deleteIcon[0].Click();
+                deleteIconList2[0].Click();
                 Thread.Sleep(1000); 
 
             }
@@ -70,20 +84,19 @@ namespace ReqnrollProject1.Pages
         
         public int GetSkillCount()
         {
-            var rows = driver.FindElements(By.XPath(
-                "//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr"));
-            /*  to access the table rows for logic, First you fetch the table frame xpath which is till div, then you go to table, then move cursor to trace,
-                   then rows.count willl work.*/
+            var rows = driver.FindElements(totalRows);
+            /*  to access the table rows for logic, First I fetch the table frame xpath
+                which is till div, then you go to table, then move cursor to trace, then
+                 rows.count willl work.*/
             return rows.Count;
         }
 
         public void UpdateSkill(string oldSkill, string newSkill, string newLevel)
         {
             // Go to Skill tab
-            var skillTab = driver.FindElement(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[1]/a[2]"));
-            skillTab.Click();
+            driver.FindElement(skillTab).Click();
             // capture all rows 
-            var rows = driver.FindElements(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr"));
+            var rows = driver.FindElements(totalRows);
             foreach (var row in rows)
             {
                 var skillCell = row.FindElement(By.XPath("td[1]"));    // td[1] is the first cell in the row which contains the skill name

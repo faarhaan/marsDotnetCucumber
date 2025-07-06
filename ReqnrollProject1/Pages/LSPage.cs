@@ -14,26 +14,35 @@ namespace mars.Pages
 {
     public class LSPage : CommonDriver
     {
+        // Locators as private fields
+        private readonly By addNewButton = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/thead/tr/th[3]/div");
+        private readonly By enterLanguageName = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[1]/input");
+        private readonly By dropDwnLevel = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[2]/select");
+        private readonly By clickOnAddButton = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[3]/input[1]");
+        private readonly By lastLanguage = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody[last()]/tr/td[1]");
+        private readonly By deleteIcons = By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr/td[3]/span[2]/i");
+        private readonly By languageTab = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[1]");
+        private readonly By totalRows = By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr");
+
+
+        // Actions as methods
         public void languagePage( String Languages, String Level)
         {
-            // Check Language Functionality
-            // Click on Add new button to add Language & Skill Level
-            IWebElement addNewButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/thead/tr/th[3]/div"));
-            addNewButton.Click();
+            // Click on Add new button to add Language
+            driver.FindElement(addNewButton).Click();
 
-            /////Now enter Languae English 
-            IWebElement enterLanguageName = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[1]/input"));
-            enterLanguageName.SendKeys(Languages);
+            //Now enter Languae 
+            driver.FindElement(enterLanguageName).SendKeys(Languages);
 
             // Select Level from dropdown using SelectElement
-            IWebElement dropDownLevel = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[2]/select"));
+            //  new SelectElement(driver.FindElement(dropDownLevel)).SelectByText(Level);  OR
+            IWebElement dropDownLevel = driver.FindElement(dropDwnLevel);
             var selectElement = new SelectElement(dropDownLevel);
             selectElement.SelectByText(Level);
 
 
             // Click on Add button to add 2nd  language in list
-            IWebElement clickOnAddButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[3]/input[1]"));
-            clickOnAddButton.Click();
+            driver.FindElement(clickOnAddButton).Click();
             Thread.Sleep(3000);
 
         }
@@ -41,9 +50,9 @@ namespace mars.Pages
         {
             Thread.Sleep(3000);
             // Verify Languages are created Successfully.
-            IWebElement lastLanguage = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody[last()]/tr/td[1]"));
-            return lastLanguage.Text;
-            //Assert.That(lastLanguage.Text == "Hindi", "Languages are not added! Test is Failed!");
+            return driver.FindElement(lastLanguage).Text;
+            // driver.FindElement(lastLanguage); return lastLanguage.Text;
+            
 
         }
 
@@ -51,28 +60,28 @@ namespace mars.Pages
         public void NotAvailableAddNewButton()
         {
             // Capture the of Add New Button when available 
-            IWebElement AddNewButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/thead/tr/th[3]/div"));
-            AddNewButton.Click();
+            driver.FindElement(addNewButton).Click();
+
         }
         public void DeleteAllLanguages()
         {
-            IWebElement LanguagePage = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[1]"));
-               
+             driver.FindElement(languageTab).Click(); 
+
             // Loop through language rows, click delete for each
             while (true)
             {
-                var deleteIcons = driver.FindElements(By.XPath(
-                    "//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr/td[3]/span[2]/i"));
-                if (deleteIcons.Count == 0)
+                var deleteIconsList = driver.FindElements(deleteIcons);
+
+                if (deleteIconsList.Count == 0)
                     break;
-                new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementToBeClickable(deleteIcons[0])).Click();
+                new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(ExpectedConditions.ElementToBeClickable(deleteIconsList[0])).Click();
                 /*    deleteIcons[0].Click();
                     Thread.Sleep(1000); // Wait for row to be removed*/
 
                 try
                 {
                     // Click the first delete icon
-                    deleteIcons[0].Click();
+                    deleteIconsList[0].Click();
                     // Wait for the row to be removed
                     Thread.Sleep(1000);
                 }
@@ -87,11 +96,11 @@ namespace mars.Pages
         public void uPdateLanguage(String Languages,String NewLanguage, String NewLevel)
         {
             // Activate Language tab so that languages can be updated
-            IWebElement LanguageTab = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[1]/a[1]"));
-            LanguageTab.Click();
+            driver.FindElement(languageTab).Click();
+
 
             // Capture all rows of table
-            var rows = driver.FindElements(By.XPath("//*[@id='account-profile-section']/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/tbody/tr"));
+            var rows = driver.FindElements(totalRows);
             foreach(var row in rows)                
             {
                 // Check if the first cell contains the language to be updated

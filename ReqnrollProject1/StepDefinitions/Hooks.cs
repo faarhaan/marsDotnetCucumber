@@ -11,34 +11,6 @@ using System.Threading.Tasks;
 
 namespace ReqnrollProject1.StepDefinitions
 {
-    /*    [Binding]
-        public class Hooks : CommonDriver
-        {
-            [BeforeScenario(Order = 0)]
-            public void SetupSteps()
-            {
-                driver = new ChromeDriver();
-            }
-
-            [AfterScenario(Order = 100)]
-            //[Scope(Tag = "languages")]
-            public void CleanUpLanguages()
-            {
-                var lSPageObj = new LSPage();
-                lSPageObj.DeleteAllLanguages();
-                driver.Quit();
-            }
-
-            [AfterScenario(Order = 100)]
-            [Scope(Tag = "skills")]
-            public void CleanUpSkills()
-            {
-                var skilPageObj = new SkilPage();
-                skilPageObj.DeleteAllSkills();
-                driver.Quit();
-            }
-        }*/
-
     [Binding]
     public class Hooks : CommonDriver
     {

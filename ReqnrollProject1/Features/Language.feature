@@ -24,7 +24,7 @@ Scenario Outline:@order:3 Update the Language list
     And I update the language '<Languages>' to '<NewLanguage>' and level to '<NewLevel>'
     Then language '<NewLanguage>' and level '<NewLevel>' should be created successfully
     Examples:
-      | Languages | Level            | NewLanguage | NewLevel        |
+      | Languages | Level            | NewLanguage | NewLevel         |
       | English   | Fluent           | Spanish     | Native/Bilingual |
       | Urdu      | Native/Bilingual | French      | Fluent           |
       | Punjabi   | Native/Bilingual | German      | Fluent           |

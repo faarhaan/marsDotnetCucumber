@@ -17,9 +17,24 @@
             Thread.Sleep(3000);
             IWebElement MarsLogo = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/div[1]/a"));
             assert.that(MarsLogo.Text == "Mars Logo", "User is not logged in successfully! Test Failed");
+
+            //Assert.That(lastLanguage.Text == "Hindi", "Languages are not added! Test is Failed!");
+
+            ----------------------------------------------------------------------------------------------------
+
+            public String GetLastSkill( String Skills, String Level)
+        {
+            Thread.Sleep(2000);
+            // Verify languages are successfully added
+            return driver.FindElement(lastSkill).Text; 
+            
+            // or driver.FindElement(lastSkill)); return lastSkill.Text
+            //Assert.That(lastSkill.Text == "Selenium", "Skills are not added in database! Test is Failed");
+
            
         }
     }
+     ------------------------------------------------------------------------------------------------------------------------------
 Normall hooks for opening and closing the browser with out clening
   /*    [Binding]
         public class Hooks : CommonDriver
@@ -41,6 +56,35 @@ Normall hooks for opening and closing the browser with out clening
                 }
             }
         }*/
+        -----------------------------------------------------OR-----------------
+           /*    [Binding]
+        public class Hooks : CommonDriver
+        {
+            [BeforeScenario(Order = 0)]
+            public void SetupSteps()
+            {
+                driver = new ChromeDriver();
+            }
+
+            [AfterScenario(Order = 100)]
+            //[Scope(Tag = "languages")]
+            public void CleanUpLanguages()
+            {
+                var lSPageObj = new LSPage();
+                lSPageObj.DeleteAllLanguages();
+                driver.Quit();
+            }
+
+            [AfterScenario(Order = 100)]
+            [Scope(Tag = "skills")]
+            public void CleanUpSkills()
+            {
+                var skilPageObj = new SkilPage();
+                skilPageObj.DeleteAllSkills();
+                driver.Quit();
+            }
+        }*/
+        -------------------------------------------------------
 Scenario: Add multiple languages using a table
     Given I login to skillShare portal successfully
     When I add the following languages:

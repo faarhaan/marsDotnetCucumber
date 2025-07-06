@@ -11,13 +11,18 @@ namespace mars.Pages
 {
     public class HomePage : CommonDriver
     {
-        // verify user is login successfully
+        // Locator as Private Field 
+        private readonly By marsLogo = By.XPath("//*[@id=\"account-profile-section\"]/div/div[1]/a");
+
+        //verify user is login successfully
         public string UserIsInHomePage()
         {
             Thread.Sleep(3000);
-            IWebElement MarsLogo = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/div[1]/a"));
+            IWebElement MarsLogo = driver.FindElement(marsLogo);
             return MarsLogo.Text;
-           
+
         }
+
+
     }
-}   
+}
