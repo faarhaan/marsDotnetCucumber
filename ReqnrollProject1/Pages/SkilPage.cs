@@ -41,7 +41,7 @@ namespace ReqnrollProject1.Pages
             driver.FindElement(enterFirstSkill).SendKeys(Skills);
 
             // click on dropdown and select level "Intermediate"
-            //  new SelectElement(driver.FindElement(levelDropdown).SelectByText(Level);  OR
+            //new SelectElement(driver.FindElement(levelDropdown).SelectByText(Level);  OR
             IWebElement dropDownLevel1 = driver.FindElement(levelDropdown);
             var selectElement1 = new SelectElement(dropDownLevel1);
             selectElement1.SelectByText(Level);
