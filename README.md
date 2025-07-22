@@ -1,6 +1,6 @@
 # marsDotnetSpecFlow Framework
 
-A .NET-based test automation framework using Reqnroll (Cucumber for .NET) and Selenium WebDriver. This framework
+A .NET-based test automation framework using SpecFlow (Cucumber for .NET) and Selenium WebDriver. This framework
 is designed to test web applications "Mars Trading Skill Portal" with a clean, maintainable structure.
 
 ## Overview
