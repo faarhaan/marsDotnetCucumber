@@ -1,2 +1,2 @@
-# marsDotnetCucumber
+# marsDotnetSpecFlow
 regression
